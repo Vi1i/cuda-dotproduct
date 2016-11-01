@@ -32,23 +32,19 @@ int main(int argc, char * argv[]) {
     int time_seq;
     int time_par;
 
-    printf("Generating Array A\n");
     gen_curand_array(seed_a, a, size);
 
-    printf("Generating Array B\n");
     gen_curand_array(seed_b, b, size);
 
     *result_seq = 0;
     *result = 0;
 
-    printf("Sequential dot\n");
     gettimeofday(&start, NULL);
     dot_product(result, a, b, size);
     gettimeofday(&end, NULL);
     time_seq = (end.tv_sec  - start.tv_sec) * 1000000L +
         (end.tv_usec - start.tv_usec);
 
-    printf("GPU Parallel dot\n");
     gettimeofday(&start, NULL);
     dot(result_seq, a, b, size);
     gettimeofday(&end, NULL);
@@ -56,7 +52,7 @@ int main(int argc, char * argv[]) {
         (end.tv_usec - start.tv_usec);
 
     printf("GPU : %d : %d \n", time_par, *result);
-    printf("CPU : %d : %d \n", time_seq, *result);
+    printf("CPU : %d : %d \n", time_seq, *result_seq);
 
     free(a);
     free(b);
