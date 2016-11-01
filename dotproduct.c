@@ -52,8 +52,8 @@ int main(int argc, char * argv[]) {
     time_par = (end.tv_sec  - start.tv_sec) * 1000000L +
         (end.tv_usec - start.tv_usec);
 
-    printf("GPU : %d : %lld \n", time_par, *result);
-    printf("CPU : %d : %lld \n", time_seq, *result_seq);
+    printf("GPU,%d,%d,%lld\n", size, time_par, *result);
+    printf("CPU,%d,%d,%lld\n", size, time_seq, *result_seq);
 
     free(a);
     free(b);
