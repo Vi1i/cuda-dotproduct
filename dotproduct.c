@@ -1,13 +1,14 @@
+/*******************************************************************************
+ *
+ ******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
 
-extern void dot_product(int * result, int * a, int * b,
-        size_t size);
-extern void gen_curand_array(unsigned long long seed, int * array,
-        size_t array_size);
+extern void dot_product(long long * result, int * a, int * b, size_t size);
+extern void gen_curand_array(unsigned long long seed, int * array, size_t size);
 
-void dot(int * result, int * a, int * b, size_t size) {
+void dot(long long * result, int * a, int * b, size_t size) {
     int z;
     for(z = 0; z < size; z++) {
         *result += a[z] * b[z];
@@ -23,8 +24,8 @@ int main(int argc, char * argv[]) {
     size_t size = (int) strtol(argv[1], (char **)NULL, 10);
     int * a = (int *) malloc(size * sizeof(int));
     int * b = (int *) malloc(size * sizeof(int));
-    int * result = (int *) malloc(sizeof(int));
-    int * result_seq = (int *) malloc(sizeof(int));
+    long long * result = (long long *) malloc(sizeof(long long));
+    long long * result_seq = (long long *) malloc(sizeof(long long));
     unsigned long long seed_a = 1;
     unsigned long long seed_b = 2;
     struct timeval start;
@@ -51,10 +52,12 @@ int main(int argc, char * argv[]) {
     time_par = (end.tv_sec  - start.tv_sec) * 1000000L +
         (end.tv_usec - start.tv_usec);
 
-    printf("GPU : %d : %d \n", time_par, *result);
-    printf("CPU : %d : %d \n", time_seq, *result_seq);
+    printf("GPU : %d : %lld \n", time_par, *result);
+    printf("CPU : %d : %lld \n", time_seq, *result_seq);
 
     free(a);
     free(b);
+    free(result);
+    free(result_seq);
     exit(EXIT_SUCCESS);
 }
